@@ -10,30 +10,41 @@ import {
 } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 export default function App() {
-  const [todoData, setTodoData] = useState([
-    { key: 0, contents: "Devin" },
-    { key: 1, contents: "Dan" },
-    { key: 2, contents: "Dominic" },
-    { key: 3, contents: "Jackson" },
-    { key: 4, contents: "James" },
-    { key: 5, contents: "Joel" },
-    { key: 6, contents: "John" },
-    { key: 7, contents: "Jillian" },
-    { key: 8, contents: "Jimmy" },
-  ]);
+  type TodoItem = { key: number; contents: string };
 
-  const removeItem = (e: any, key: number) => {
-    console.log(key);
+  const [todoData, setTodoData] = useState<TodoItem[]>([]);
+  const [insertTodo, setInsertTodo] = useState<string>("");
+
+  const insertItem = () => {
+    setTodoData(
+      todoData.concat({
+        key: todoData.length + 1,
+        contents: insertTodo,
+      })
+    );
+    setInsertTodo("");
+  };
+  const removeItem = (key: number): void => {
+    setTodoData(
+      todoData.filter((value: { key: number; contents: string }): boolean => {
+        return value.key !== key;
+      })
+    );
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.contents}>
         <Text style={styles.title}>To Do List</Text>
-        <TextInput
-          style={styles.todoInput}
-          placeholder="💡할 일을 입력해주세요."
-        />
+        <View style={styles.flexRow2Colum}>
+          <TextInput
+            style={styles.todoInput}
+            onChangeText={setInsertTodo}
+            value={insertTodo}
+            placeholder="💡할 일을 입력해주세요."
+          />
+          <Button title="입력" onPress={() => insertItem()} />
+        </View>
         <FlatList
           data={todoData}
           renderItem={({ item }) => (
@@ -48,7 +59,7 @@ export default function App() {
               </View>
               <Button
                 title="❌"
-                onPress={(e: any) => removeItem(e, item.key)}
+                onPress={(e: any) => removeItem(item.key)}
                 color={"white"}
               />
             </View>
@@ -83,6 +94,7 @@ const styles = StyleSheet.create({
   todoInput: {
     height: 50,
     margin: 10,
+    width: "70%",
   },
   flexRow2Colum: {
     flexDirection: "row",
