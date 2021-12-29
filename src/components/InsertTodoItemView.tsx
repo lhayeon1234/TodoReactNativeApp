@@ -24,6 +24,7 @@ const InsertTodoItemView = ({
         style={styles.todoInput}
         onChangeText={setInsertTodo}
         value={insertTodo}
+        onSubmitEditing={insertItem}
         placeholder="💡할 일을 입력해주세요."
       />
       <TouchableOpacity onPress={insertItem} style={styles.customButton}>
