@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
@@ -16,6 +17,7 @@ export default function App() {
   const [insertTodo, setInsertTodo] = useState<string>("");
 
   const insertItem = () => {
+    if (insertTodo === "") return;
     setTodoData(
       todoData.concat({
         key: todoData.length + 1,
@@ -36,32 +38,36 @@ export default function App() {
     <View style={styles.container}>
       <View style={styles.contents}>
         <Text style={styles.title}>To Do List</Text>
-        <View style={styles.flexRow2Colum}>
+        <View style={styles.flexRowSpaceBetween}>
           <TextInput
             style={styles.todoInput}
             onChangeText={setInsertTodo}
             value={insertTodo}
             placeholder="💡할 일을 입력해주세요."
           />
-          <Button title="입력" onPress={() => insertItem()} />
+          <TouchableOpacity
+            onPress={() => insertItem()}
+            style={styles.customButton}
+          >
+            <Text style={styles.customButtonText}>입력</Text>
+          </TouchableOpacity>
         </View>
         <FlatList
           data={todoData}
           renderItem={({ item }) => (
-            <View style={styles.flexRow2Colum}>
-              <View style={styles.flexRow2Colum}>
-                <BouncyCheckbox
-                  onPress={(isChecked: boolean) => {
-                    console.log(isChecked);
-                  }}
-                />
-                <Text style={styles.todoItemText}>{item.contents}</Text>
-              </View>
-              <Button
-                title="❌"
-                onPress={(e: any) => removeItem(item.key)}
-                color={"white"}
+            <View style={styles.flexRowSpaceBetween}>
+              <BouncyCheckbox
+                onPress={(isChecked: boolean) => {
+                  console.log(isChecked);
+                }}
               />
+              <Text style={styles.todoItemText}>{item.contents}</Text>
+              <TouchableOpacity
+                style={{ justifyContent: "center" }}
+                onPress={(e: any) => removeItem(item.key)}
+              >
+                <Text>❌</Text>
+              </TouchableOpacity>
             </View>
           )}
         />
@@ -96,17 +102,32 @@ const styles = StyleSheet.create({
     margin: 10,
     width: "70%",
   },
-  flexRow2Colum: {
+  flexRowSpaceBetween: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
   todoItemText: {
+    width: "70%",
     fontFamily: "fangsong",
     fontSize: 20,
     textAlign: "left",
     padding: 5,
   },
   removeTodoItem: {
+    justifyContent: "center",
     alignSelf: "flex-end",
+  },
+  customButton: {
+    flex: 1,
+    alignSelf: "center",
+    textAlign: "center",
+    justifyContent: "center",
+    backgroundColor: "#a9a9a9",
+    borderRadius: 5,
+    height: 35,
+  },
+  customButtonText: {
+    fontSize: 15,
+    color: "#fffaf0",
   },
 });
