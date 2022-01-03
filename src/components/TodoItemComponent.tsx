@@ -7,7 +7,7 @@ interface Props {
   updateItemState: (key: number) => void;
   removeItem: (key: number) => void;
 }
-const TodoItemView = ({ todo, updateItemState, removeItem }: Props) => {
+const TodoItemComponent = ({ todo, updateItemState, removeItem }: Props) => {
   return (
     <View style={styles.flexRowSpaceBetween}>
       <BouncyCheckbox
@@ -40,4 +40,4 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 });
-export default TodoItemView;
+export default TodoItemComponent;

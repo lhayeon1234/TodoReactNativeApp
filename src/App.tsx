@@ -1,8 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import InsertTodoItemView from "./components/InsertTodoItemView";
-import TodoListView from "./components/TodoListView";
+import InsertTodoItemComponent from "./components/InsertTodoItemComponent";
+import TodoListComponent from "./components/TodoListComponent";
 import { Todo } from "./types/todo";
 const Separator = () => <View style={styles.separator} />;
 
@@ -44,18 +44,18 @@ export default function App() {
     <View style={styles.container}>
       <View style={styles.contents}>
         <Text style={styles.title}>To Do List</Text>
-        <InsertTodoItemView
+        <InsertTodoItemComponent
           insertTodo={insertTodo}
           setInsertTodo={setInsertTodo}
           insertItem={insertItem}
         />
-        <TodoListView
+        <TodoListComponent
           todoData={todoData.filter((todo) => todo.state === false)}
           updateItemState={updateItemState}
           removeItem={removeItem}
         />
         <Separator />
-        <TodoListView
+        <TodoListComponent
           todoData={todoData.filter((todo) => todo.state === true)}
           updateItemState={updateItemState}
           removeItem={removeItem}

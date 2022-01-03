@@ -13,7 +13,7 @@ interface Props {
   insertItem: () => void;
 }
 
-const InsertTodoItemView = ({
+const InsertTodoItemComponent = ({
   insertTodo,
   setInsertTodo,
   insertItem,
@@ -58,4 +58,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InsertTodoItemView;
+export default InsertTodoItemComponent;
